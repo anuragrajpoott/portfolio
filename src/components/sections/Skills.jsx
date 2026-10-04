@@ -1,107 +1,115 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Database, KeyRound, Layers, ShieldCheck, Workflow } from "lucide-react";
 import {
-  Code2,
-  Database,
-  Layers3,
-  Wrench,
-} from "lucide-react";
+  SiCplusplus,
+  SiCss,
+  SiDocker,
+  SiExpress,
+  SiGit,
+  SiGithub,
+  SiGithubactions,
+  SiHtml5,
+  SiJavascript,
+  SiMongodb,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiPostman,
+  SiPython,
+  SiReact,
+  SiRedux,
+  SiTailwindcss,
+  SiTypescript,
+  SiVercel,
+  SiVite,
+  SiZod,
+} from "react-icons/si";
 
-const SKILL_GROUPS = [
-  {
-    title: "Languages",
-    icon: Code2,
-    skills: ["C++", "JavaScript", "TypeScript", "Python", "SQL"],
-  },
-  {
-    title: "Frontend",
-    icon: Layers3,
-    skills: [
-      "React.js",
-      "Redux",
-      "HTML5",
-      "CSS3",
-      "Tailwind CSS",
-    ],
-  },
-  {
-    title: "Backend",
-    icon: Database,
-    skills: [
-      "Node.js",
-      "Express.js",
-      "REST APIs",
-      "JWT Authentication",
-      "MVC Architecture",
-    ],
-  },
-  {
-    title: "Database & Tools",
-    icon: Wrench,
-    skills: [
-      "MongoDB",
-      "Git",
-      "GitHub",
-      "Cloudinary",
-      "Postman",
-      "Vercel",
-      "Render",
-    ],
-  },
+import SectionHeading from "../ui/SectionHeading";
+
+const SKILLS = [
+  { name: "C++", icon: SiCplusplus, group: "Languages" },
+  { name: "JavaScript", icon: SiJavascript, group: "Languages" },
+  { name: "TypeScript", icon: SiTypescript, group: "Languages" },
+  { name: "Python", icon: SiPython, group: "Languages" },
+  { name: "SQL", icon: Database, group: "Languages" },
+  { name: "React", icon: SiReact, group: "Frontend" },
+  { name: "Next.js", icon: SiNextdotjs, group: "Frontend" },
+  { name: "Redux Toolkit", icon: SiRedux, group: "Frontend" },
+  { name: "Tailwind CSS", icon: SiTailwindcss, group: "Frontend" },
+  { name: "Vite", icon: SiVite, group: "Frontend" },
+  { name: "HTML5", icon: SiHtml5, group: "Frontend" },
+  { name: "CSS3", icon: SiCss, group: "Frontend" },
+  { name: "Node.js", icon: SiNodedotjs, group: "Backend" },
+  { name: "Express.js", icon: SiExpress, group: "Backend" },
+  { name: "PostgreSQL", icon: SiPostgresql, group: "Backend" },
+  { name: "MongoDB", icon: SiMongodb, group: "Backend" },
+  { name: "REST APIs", icon: Workflow, group: "Backend" },
+  { name: "JWT Auth", icon: KeyRound, group: "Backend" },
+  { name: "RBAC", icon: ShieldCheck, group: "Backend" },
+  { name: "MVC", icon: Layers, group: "Backend" },
+  { name: "Zod", icon: SiZod, group: "Backend" },
+  { name: "Git", icon: SiGit, group: "Tools" },
+  { name: "GitHub", icon: SiGithub, group: "Tools" },
+  { name: "Docker", icon: SiDocker, group: "Tools" },
+  { name: "Postman", icon: SiPostman, group: "Tools" },
+  { name: "CI/CD", icon: SiGithubactions, group: "Tools" },
+  { name: "Vercel", icon: SiVercel, group: "Tools" },
 ];
 
+const FILTERS = ["All", "Languages", "Frontend", "Backend", "Tools"];
+
 function Skills() {
+  const [filter, setFilter] = useState("All");
+  const visible = filter === "All" ? SKILLS : SKILLS.filter((s) => s.group === filter);
+
   return (
-    <section id="skills" className="section-padding">
-      <div className="container-custom">
-        <div className="section-header">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-zinc-500">
-            Skills
-          </p>
+    <section id="skills" className="section">
+      <div className="container-custom grid items-center gap-14 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <SectionHeading
+            eyebrow="My skills"
+            title="Technologies I work with."
+            subtitle="Tools and technologies I use to build modern, scalable web applications."
+          />
 
-          <h2 className="section-title">
-            Technologies I work with.
-          </h2>
-
-          <p className="section-subtitle">
-            My primary tools and technologies for building scalable, modern web
-            applications.
-          </p>
+          <div role="tablist" aria-label="Filter skills" className="mt-8 inline-flex flex-wrap gap-1 rounded-full border border-line p-1">
+            {FILTERS.map((f) => (
+              <button
+                key={f}
+                type="button"
+                role="tab"
+                aria-selected={filter === f}
+                onClick={() => setFilter(f)}
+                className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition ${
+                  filter === f ? "bg-accent text-white" : "text-muted hover:text-fg"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2">
-          {SKILL_GROUPS.map(({ title, icon: Icon, skills }, index) => (
-            <motion.article
-              key={title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: index * 0.08 }}
-              className="rounded-2xl border border-zinc-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="mb-5 flex items-center gap-3">
-                <Icon
-                  size={20}
-                  className="text-zinc-700"
-                />
-
-                <h3 className="text-lg font-semibold">
-                  {title}
-                </h3>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:bg-zinc-100"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.article>
-          ))}
-        </div>
+        <motion.ul layout className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6">
+          <AnimatePresence mode="popLayout">
+            {visible.map(({ name, icon: Icon }) => (
+              <motion.li
+                key={name}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.25 }}
+                className="card group flex flex-col items-center justify-center gap-2.5 px-2 py-4 text-center"
+              >
+                <Icon size={24} className="text-muted transition-colors group-hover:text-accent" />
+                <span className="text-xs font-medium">{name}</span>
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
       </div>
     </section>
   );

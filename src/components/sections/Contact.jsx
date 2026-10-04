@@ -1,95 +1,74 @@
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
+import { ArrowRight } from "lucide-react";
 
-const CONTACTS = [
-  {
-    name: "GitHub",
-    href: "https://github.com/anuragrajpoott",
-    icon: FaGithub,
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/in/anuragrajpoott",
-    icon: FaLinkedin,
-  },
-  {
-    name: "LeetCode",
-    href: "https://leetcode.com/u/anuragrajpoott",
-    icon: SiLeetcode,
-  },
-];
+import { EMAIL, SOCIALS, fadeUp } from "../../constants/site";
+import SectionHeading from "../ui/SectionHeading";
+
+// Decorative flowing lines, tinted with the accent color
+function Waves() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 600 600"
+      fill="none"
+      className="pointer-events-none absolute -bottom-24 -right-24 w-[38rem] max-w-none text-accent opacity-25"
+    >
+      {Array.from({ length: 18 }, (_, i) => (
+        <path
+          key={i}
+          d={`M0 ${520 - i * 14} C 180 ${420 - i * 22}, 320 ${640 - i * 10}, 600 ${200 - i * 12}`}
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+      ))}
+    </svg>
+  );
+}
 
 function Contact() {
   return (
-    <section id="contact" className="section-padding">
-      <div className="container-custom">
+    <section id="contact" className="section relative overflow-hidden">
+      <Waves />
 
-           <div className="section-header">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-zinc-500">
-            Contact
-          </p>
-
-          <h2 className="section-title">
-            Let's Connect.
-          </h2>
-
+      <div className="container-custom relative grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+        <div>
+          <SectionHeading
+            eyebrow="Let's connect"
+            title="Let's build something amazing together."
+            subtitle="I'm open to full-time roles, interesting projects and collaborations. My inbox is always open."
+          />
         </div>
 
+        <motion.div {...fadeUp} className="flex flex-col items-start gap-6">
+          <a href={`mailto:${EMAIL}`} className="btn-primary px-7 py-3.5 text-base">
+            Get in Touch
+            <ArrowRight size={18} />
+          </a>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
-          className="rounded-2xl border border-zinc-200 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg md:p-12"
-        >
-          <div className="section-header mb-0">
-            <span className="mb-4 inline-flex rounded-full bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-600">
-              Available for Full-Time Opportunities
-            </span>
+          <a href={`mailto:${EMAIL}`} className="text-sm text-muted transition hover:text-accent">
+            {EMAIL}
+          </a>
 
-            <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-zinc-500">
-              Contact
-            </p>
-
-            <h2 className="section-title">
-              Let's build something together.
-            </h2>
-
-            <p className="section-subtitle">
-              I'm actively looking for Software Development opportunities. If
-              you'd like to discuss a role, collaborate on a project, or simply
-              connect, I'd love to hear from you.
-            </p>
-          </div>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href="mailto:anuragrajpoot2468@gmail.com"
-              className="inline-flex items-center gap-2 rounded-full bg-zinc-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-800"
-            >
-              <Mail size={18} />
-              Send Email
-            </a>
-
-            {CONTACTS.map(({ name, href, icon: Icon }) => (
+          <div className="flex gap-3">
+            {SOCIALS.map(({ name, href, icon: Icon }) => (
               <a
                 key={name}
                 href={href}
-                target="_blank"
+                target={href.startsWith("mailto:") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={name}
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-200 px-5 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+                className="icon-btn"
               >
                 <Icon size={18} />
-                {name}
               </a>
             ))}
           </div>
         </motion.div>
       </div>
+
+      <p className="absolute inset-x-0 bottom-6 text-center text-xs text-muted">
+        © {new Date().getFullYear()} Anurag Dangi
+      </p>
     </section>
   );
 }

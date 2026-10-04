@@ -1,141 +1,76 @@
 import { motion } from "framer-motion";
-import {
-  Briefcase,
-  GraduationCap,
-  MapPin,
-  Trophy,
-} from "lucide-react";
+import { Code2, GraduationCap, Lightbulb, MapPin, Server, Users } from "lucide-react";
 
-const ACHIEVEMENTS = [
-  "Solved 500+ LeetCode problems",
-  "Smart India Hackathon (SIH) Finalist",
-  "Head of Events, Pratyaksh Drama Society",
-  "State Basketball Team Captain",
+import { fadeUp } from "../../constants/site";
+import SectionHeading from "../ui/SectionHeading";
+
+const TRAITS = [
+  {
+    icon: Lightbulb,
+    title: "Problem Solver",
+    text: "500+ DSA problems solved in C++. I enjoy turning complex problems into simple solutions.",
+  },
+  {
+    icon: Server,
+    title: "Backend Focused",
+    text: "APIs, auth, RBAC and data models built to be secure and to scale.",
+  },
+  {
+    icon: Users,
+    title: "Team Player",
+    text: "SIH finalist, state basketball captain and head of events. I like building together.",
+  },
+  {
+    icon: Code2,
+    title: "Detail Oriented",
+    text: "Clean, maintainable code with clear architecture and thoughtful UX.",
+  },
 ];
 
-const QUICK_FACTS = [
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Indore, India",
-  },
-  {
-    icon: Briefcase,
-    label: "Specialization",
-    value: "MERN • Backend • DSA",
-  },
+const FACTS = [
+  { icon: MapPin, text: "Indore, India" },
+  { icon: GraduationCap, text: "B.E., IET DAVV · 2026" },
 ];
 
 function About() {
   return (
-    <section id="about" className="section-padding">
-      <div className="container-custom">
-        <div className="section-header">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-zinc-500">
-            About
-          </p>
+    <section id="about" className="section">
+      <div className="container-custom grid items-center gap-14 lg:grid-cols-2">
+        <div>
+          <SectionHeading eyebrow="About me" title="Turning ideas into real-world solutions." />
 
-          <h2 className="section-title">
-            Education, background & achievements.
-          </h2>
+          <motion.p {...fadeUp} className="mt-6 max-w-lg leading-8 text-muted">
+            I'm a Full Stack Developer and Bachelor of Engineering graduate from
+            IET DAVV, Indore. I build production-ready applications with the
+            MERN stack, TypeScript and PostgreSQL, with a strong interest in
+            backend engineering, clean architecture and maintainable code.
+          </motion.p>
 
-          <p className="section-subtitle">
-            A quick overview of my academic journey, technical interests, and
-            accomplishments.
-          </p>
+          <motion.ul {...fadeUp} className="mt-8 flex flex-wrap gap-3">
+            {FACTS.map(({ icon: Icon, text }) => (
+              <li key={text} className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm text-muted">
+                <Icon size={15} className="text-accent" />
+                {text}
+              </li>
+            ))}
+          </motion.ul>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
-          <motion.article
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45 }}
-            className="rounded-2xl border border-zinc-200 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-          >
-            <p className="text-lg leading-8 text-zinc-600">
-              I'm{" "}
-              <span className="font-semibold text-zinc-950">
-                Anurag Dangi
+        <div className="grid gap-4 sm:grid-cols-2">
+          {TRAITS.map(({ icon: Icon, title, text }, i) => (
+            <motion.article
+              key={title}
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: i * 0.08 }}
+              className="card p-6"
+            >
+              <span className="inline-flex size-11 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <Icon size={20} />
               </span>
-              , a Software Developer pursuing a Bachelor's degree in Electronics
-              Engineering at IET DAVV, Indore. I enjoy building scalable,
-              secure, and production-ready full-stack applications using the
-              MERN stack, with a strong interest in backend engineering, clean
-              architecture, and writing maintainable code.
-            </p>
-
-            <p className="mt-6 text-lg leading-8 text-zinc-600">
-              Alongside development, I regularly practice Data Structures &
-              Algorithms to strengthen my problem-solving skills and continuously
-              improve as a software engineer.
-            </p>
-
-            <div className="mt-8 grid gap-5 border-t border-zinc-200 pt-5 sm:grid-cols-3">
-              {QUICK_FACTS.map(({ icon: Icon, label, value }) => (
-                <div key={label}>
-                  <div className="flex items-center gap-2 text-zinc-500">
-                    <Icon size={16} />
-                    <span className="text-sm">{label}</span>
-                  </div>
-
-                  <p className="mt-2 font-medium text-zinc-900">
-                    {value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </motion.article>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: 0.1 }}
-            className="space-y-6"
-          >
-            <article className="rounded-2xl border border-zinc-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <div className="mb-4 flex items-center gap-2">
-                <GraduationCap size={18} />
-                <h3 className="font-semibold">Education</h3>
-              </div>
-
-              <p className="font-medium text-zinc-900">
-                Institute of Engineering & Technology, DAVV
-              </p>
-
-              <p className="mt-2 text-sm text-zinc-600">
-                Bachelor of Engineering (Electronics)
-              </p>
-
-              <p className="mt-1 text-sm text-zinc-600">
-                2022 – 2026
-              </p>
-
-              <p className="mt-1 text-sm font-medium text-zinc-900">
-                CGPA: 7.5
-              </p>
-            </article>
-
-            <article className="rounded-2xl border border-zinc-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <div className="mb-4 flex items-center gap-2">
-                <Trophy size={18} />
-                <h3 className="font-semibold">Achievements</h3>
-              </div>
-
-              <ul className="space-y-4">
-                {ACHIEVEMENTS.map((achievement) => (
-                  <li
-                    key={achievement}
-                    className="flex items-start gap-3 text-sm text-zinc-600"
-                  >
-                    <span className="mt-2 h-2 w-2 rounded-full bg-zinc-900" />
-                    <span>{achievement}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </motion.div>
+              <h3 className="mt-5 font-semibold">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-muted">{text}</p>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>
